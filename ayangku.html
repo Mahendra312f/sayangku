@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Untuk Ayangku</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background-color: black; }
+
+    .slide {
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding-top: 30vh;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+    }
+
+    .active { display: block; animation: fade 1s ease-in-out; }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .animated-text {
+      display: inline-block;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .animated-text:nth-child(1) { animation-delay: 0.5s; }
+    .animated-text:nth-child(2) { animation-delay: 1.2s; }
+    .animated-text:nth-child(3) { animation-delay: 2s; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      pointer-events: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    #nextBtn, #playBtn {
+      position: fixed;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      background-color: rgba(255,255,255,0.8);
+      color: #000;
+      cursor: pointer;
+      border-radius: 8px;
+      z-index: 10;
+    }
+
+    #nextBtn { bottom: 30px; left: 30px; }
+    #playBtn { bottom: 30px; right: 30px; }
+  </style>
+</head>
+<body>
+
+  <div class="slide active" style="background-image: url('bg1.jpg');">
+    <div class="animated-text">Maaf sayang 😔</div><br>
+    <div class="animated-text">Aku bikin kamu badmood...</div>
+  </div>
+
+  <div class="slide" style="background-image: url('bg2.jpg');">
+    <div class="animated-text">Love you sayang 🥺</div><br>
+    <div class="animated-text">Aku mikirin kamu terus...</div><br>
+    <div class="animated-text">Maaf yaa, Mahen ga bisa bobo...</div>
+  </div>
+
+  <div class="slide" style="background-image: url('bg3.jpg');">
+    <div class="animated-text">Good Night Sayang Mahen Minta Maaf Ya ️️</div>
+  </div>
+
+  <button id="nextBtn">❤️ Next</button>
+  <button id="playBtn">Putar Lagu 🎵</button>
+
+  <audio id="bgm" src="laguku.mp3" preload="auto"></audio>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    });
+
+    const playBtn = document.getElementById("playBtn");
+    const bgm = document.getElementById("bgm");
+
+    playBtn.addEventListener("click", () => {
+      bgm.play();
+      playBtn.textContent = "Lagu Diputar 🎶";
+    });
+
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.style.left = Math.random() * window.innerWidth + 'px';
+      snowflake.style.animationDuration = (3 + Math.random() * 5) + 's';
+      snowflake.style.width = snowflake.style.height = (5 + Math.random() * 8) + 'px';
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 8000);
+    }
+
+    setInterval(createSnowflake, 200);
+  </script>
+
+</body>
+</html>
